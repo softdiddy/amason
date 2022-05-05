@@ -4,8 +4,8 @@
   "description": "Amason clone web application developed using nodejs and mangodb",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "nodemon server.js"
   },
   "author": "Mohammed Lawal Abubakar",
   "license": "ISC",
