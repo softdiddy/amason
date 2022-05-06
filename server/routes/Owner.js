@@ -54,6 +54,33 @@ router.get("/owner/:id", async (req, res) => {
         });
     }
   });
+
+//Update owner
+router.put("/owner/:id", async (req, res) => {
+    try {
+      let owner = await Owner.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {
+            name: req.body.name,
+            about: req.body.about,
+            photo: req.body.photo
+          }
+        },
+        { upsert: true }
+      );
+  
+      res.json({
+        success: true,
+        updatedOwner: owner,
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  });
   
 
 module.exports = router;
