@@ -23,7 +23,7 @@ router.post("/owner", async (req, res) => {
   }
 });
 
-//GET request
+//get all request
 router.get("/owner", async (req, res) => {
   try {
     let owners = await Owner.find();
@@ -37,5 +37,23 @@ router.get("/owner", async (req, res) => {
     console.log(err);
   }
 });
+
+//get single owner
+router.get("/owner/:id", async (req, res) => {
+    try {
+      let owner = await Owner.findOne({ _id: req.params.id });
+  
+      res.json({
+        status: true,
+        owner: owner,
+      });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+  });
+  
 
 module.exports = router;
