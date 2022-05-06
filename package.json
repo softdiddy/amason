@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "mongose": "^0.0.2-security",
-    "nodemon": "^2.0.16"
-  }
-}
