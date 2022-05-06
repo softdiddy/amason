@@ -25,8 +25,13 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const productRouter= require("./routes/Product")
+
+//api call
+const productRouter= require("./routes/Product");
+const categoryRouter= require("./routes/Catigory");
+
 app.use("/api", productRouter);
+app.use("/api", categoryRouter);
 
 app.listen(5000, (err) => {
   if (err) {
