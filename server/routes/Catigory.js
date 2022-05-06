@@ -71,4 +71,32 @@ router.put("/catigory/:id", async (req, res) => {
   }
 });
 
+//Delete Category
+router.delete("/catigory/:id", async (req, res) => {
+    try {
+      let deletecategory = await Category.findOneAndDelete({ _id: req.params.id });
+
+      if (deletecategory){
+        res.json({
+            status: true,
+            menubar: "Category has been deleted"
+        });
+      }
+
+      res.json({
+        success: true,
+        updatedCategory: category,
+      });
+
+    } catch (err) {
+
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+
+    }
+  });
+  
+
 module.exports = router;
