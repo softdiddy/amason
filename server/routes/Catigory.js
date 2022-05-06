@@ -83,10 +83,6 @@ router.delete("/catigory/:id", async (req, res) => {
         });
       }
 
-      res.json({
-        success: true,
-        updatedCategory: category,
-      });
 
     } catch (err) {
 
