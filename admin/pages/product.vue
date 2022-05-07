@@ -12,18 +12,29 @@
               <div class="a-spacing-top-medium"></div>
               <label>Category</label>
               <select class="a-select-option">
-                <option value="1"></option>
+                 <option>Select Category</option>
+                <option
+                  v-for="category in categories"
+                  :value="category._id"
+                  :key="category._id"
+                >{{category.type}}</option>
               </select>
 
               <div class="a-spacing-top-medium"></div>
               <label>Owner</label>
               <select class="form-control">
-                <option value="1"></option>
+                <option>Select Owner</option>
+                <option
+                  v-for="owner in owners"
+                  :value="owner._id"
+                  :key="owner._id"
+                >{{owner.name}}</option>
               </select>
 
               <div class="a-spacing-top-medium"></div>
               <label>Title</label>
-              <input v-model="title"
+              <input
+               
                 type="text"
                 class="form-control"
                 placeholder="Enter Title"
@@ -31,7 +42,8 @@
 
               <div class="a-spacing-top-medium"></div>
               <label>Price</label>
-              <input v-model="price"
+              <input
+               
                 type="number"
                 class="form-control"
                 placeholder="Enter Price"
@@ -39,7 +51,8 @@
 
               <div class="a-spacing-top-medium"></div>
               <label>Description</label>
-              <textarea v-model="description"
+              <textarea
+               
                 class="form-control"
                 placeholder="Enter Description"
               ></textarea>
@@ -68,7 +81,32 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ $axios }) {
+    try {
+      let categories = $axios.$get("http://localhost:5000/api/catigory");
+      let owners = $axios.$get("http://localhost:5000/api/owner");
+
+      const [catResponse, ownerResponse] = await Promise.all([
+        categories,
+        owners,
+      ]);
+
+     
+
+      return {
+        categories: catResponse.categories,
+        owners: ownerResponse.owners,
+        
+      };
+
+      
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
 </script>
 
 <style>
