@@ -10,7 +10,11 @@ router.post("/products", async (req, res) => {
         product.photo = req.body.photo;
         product.price = req.body.price;
         product.stockQuantity = req.body.stockQuantity;
+        product.category = req.body.categoryId;
+        product.owner = req.body.ownerId;
 
+        console.log(product);
+        
         await product.save();
 
         res.json({

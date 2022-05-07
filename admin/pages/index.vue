@@ -38,6 +38,7 @@
               </div>
               <!---- End product rating ----->
 
+               <p class="card-text">{{product.description}}</p>
               <!---- product price ----->
                 <span class="a-size-base a-color-price">
                   <span class="p13n-sc-price">N{{product.price}}</span>
