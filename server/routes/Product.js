@@ -24,5 +24,19 @@ router.post("/products", async (req, res) => {
 
 });
 
+//get all request
+router.get("/products", async (req, res) => {
+    try {
+      let products = await Product.find();
+  
+      res.json({
+        status: true,
+        products: products,
+      });
+    } catch (err) {
+      status: false, console.log(err);
+    }
+  });
+
 
 module.exports = router;

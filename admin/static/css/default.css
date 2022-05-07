@@ -4672,6 +4672,7 @@ fieldset {
 .orderContnetBody{
   font-family: "MyWebFont",Arial,sans-serif;
 }
+
 .a-button-buy-again{
     border-color: #a88734 #9c7e31 #846a29;
     color: #111;
@@ -4720,4 +4721,21 @@ fieldset {
 }
 .orderContentFooter{
   padding: 10px 14px;
+}
+
+.amazon-bg{
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
+    background: #f4d078;
+    background: -webkit-linear-gradient(top,#f7dfa5,#f0c14b);
+    background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
+    background-color: transparent;
+}
+
+.all-products{
+    margin: 10px 30px;
 }
