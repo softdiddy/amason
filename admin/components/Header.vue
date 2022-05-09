@@ -7,9 +7,19 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
+          <NuxtLink to="/" class="a-button-buy-again"
+            ><font-awesome-icon
+              icon="fa-duotone fa-album-circle-plus"
+            />Dashboard
+          </NuxtLink>
           <NuxtLink to="/product" class="a-button-buy-again"
-            ><font-awesome-icon icon="fa-duotone fa-album-circle-plus" />Add
+            ><font-awesome-icon icon="fa-duotone fa-album-circle-plus" />Manage
             Products</NuxtLink
+          >
+
+           <NuxtLink to="/category" class="a-button-buy-again"
+            ><font-awesome-icon icon="fa-duotone fa-album-circle-plus" />Manage
+            Category</NuxtLink
           >
         </b-navbar-nav>
 

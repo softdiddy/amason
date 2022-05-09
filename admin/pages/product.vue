@@ -1,10 +1,10 @@
 <template>
   <main>
     <Header />
-    <div class="add-products">
+    <div class="add-products addProduct">
       <div class="container-fluid browsing-history">
         <div class="row">
-          <div class="a-section">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 card addProduct">
             <div class="a-spacing-top-medium"></div>
             <h2 style="text-align: center">Add new product</h2>
 
@@ -58,7 +58,7 @@
               <input
                 v-model="price"
                 type="number"
-                class="form-control"
+                class="form-control txtbox"
                 placeholder="Enter Price"
               />
 
@@ -89,6 +89,32 @@
               >
             </form>
           </div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+            <div>
+              <b-table
+                striped
+                hover
+                :items="products"
+                :fields="fields"
+              >
+              <template v-slot:cell(edit)="data"> 
+                <router-link tag="button" class="a-button-edit" :to="
+                  {
+                    name: 'editProduct',
+                    params: { productId: data.item.title}
+                  }
+                ">
+                <i class="fas fa-edit"></i> Edit
+                </router-link>
+              </template>
+
+               <template v-slot:cell(delete)="data"> 
+                 <button tag="button" class="a-button-delete" @click="deleteProduct(data.item)">Delete</button>
+              </template>
+
+              </b-table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -101,15 +127,18 @@ export default {
     try {
       let categories = $axios.$get("http://localhost:5000/api/catigory");
       let owners = $axios.$get("http://localhost:5000/api/owner");
+      let products = $axios.$get("http://localhost:5000/api/products");
 
-      const [catResponse, ownerResponse] = await Promise.all([
+      const [catResponse, ownerResponse, productsResponse] = await Promise.all([
         categories,
         owners,
+        products,
       ]);
 
       return {
         categories: catResponse.categories,
         owners: ownerResponse.owners,
+        products: productsResponse.products,
       };
     } catch (error) {
       console.log(error);
@@ -125,6 +154,33 @@ export default {
       stockQuantity: 0,
       categoryId: null,
       owerId: null,
+      fields: [
+        {
+          key: "title",
+          sortable: true,
+        },
+        {
+          key: "description",
+          sortable: true,
+        },
+        {
+          key: "price",
+          sortable: true,
+        },
+        {
+          key: "stockQuantity",
+          sortable: true,
+          label: "Quantity"
+        },
+        {
+          key: "Edit",
+        },
+        {
+          key: "Delete",
+        },
+
+      ], // table rows
+      products: [],
     };
   },
 
@@ -144,11 +200,23 @@ export default {
         "http://localhost:5000/api/products",
         data
       );
-
-      console.log(result);
-
-      this.$router.push("/");
+      if (result.status) {
+        this.products.push(data);
+        (this.title = ""),
+          (this.description = ""),
+          (this.photo = ""),
+          (this.price = ""),
+          (this.stockQuantity = ""),
+          (this.owerId = ""),
+          (this.categoryId = "");
+      }
+      //alert(result.message);
+      //this.$router.push("/");
     },
+
+    deleteProduct(){
+      
+    }
   },
 };
 </script>

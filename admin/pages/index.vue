@@ -4,7 +4,7 @@
     <div class="all-products">
       <div class="container-fluid browsing-history">
         <div class="row">
-          <div v-for="(product, index) in products" :key="product._id" class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6 br bb">
+          <div v-for="product in products" :key="product._id" class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6 br bb">
             <div class="history-box">
               <!------ Product Image  --->
               <a href="#" class="a-link-normal">
