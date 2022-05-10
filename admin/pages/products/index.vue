@@ -91,28 +91,45 @@
           </div>
           <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
             <div>
-              <b-table
-                striped
-                hover
-                :items="products"
-                :fields="fields"
-              >
-              <template v-slot:cell(edit)="data"> 
-                <router-link tag="button" class="a-button-edit" :to="
-                  {
-                    name: 'editProduct',
-                    params: { productId: data.item.title}
-                  }
-                ">
-                <i class="fas fa-edit"></i> Edit
-                </router-link>
-              </template>
+              <table class="table striped hover">
+                <tr>
+                   <th>#</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr v-for="(product, index) in products" :key="product._id">
+                  <td>{{index + 1}}</td>
+                   <td>{{product.title}}</td>
+                   <td>{{product.description}}</td>
+                   <td>{{product.price}}</td>
+                   <td>{{product.stockQuantity}}</td>
+                  <td>
+                     <router-link
+                    tag="button"
+                    class="a-button-edit"
+                    :to="`/products/${product._id}`"
+                  >
+                    <i class="fas fa-edit"></i> Edit
+                  </router-link>
+                 
+                  </td>
+                  <td>
+                     <button
+                    tag="button"
+                    class="a-button-delete"
+                    @click="deleteProduct(product._id, index)"
+                  >
+                    Delete
+                  </button>
+                  </td>
+                 
+                </tr>
 
-               <template v-slot:cell(delete)="data"> 
-                 <button tag="button" class="a-button-delete" @click="deleteProduct(data.item)">Delete</button>
-              </template>
-
-              </b-table>
+              </table>
             </div>
           </div>
         </div>
@@ -154,33 +171,8 @@ export default {
       stockQuantity: 0,
       categoryId: null,
       owerId: null,
-      fields: [
-        {
-          key: "title",
-          sortable: true,
-        },
-        {
-          key: "description",
-          sortable: true,
-        },
-        {
-          key: "price",
-          sortable: true,
-        },
-        {
-          key: "stockQuantity",
-          sortable: true,
-          label: "Quantity"
-        },
-        {
-          key: "Edit",
-        },
-        {
-          key: "Delete",
-        },
-
-      ], // table rows
       products: [],
+      sn: 1
     };
   },
 
@@ -214,9 +206,22 @@ export default {
       //this.$router.push("/");
     },
 
-    deleteProduct(){
-      
-    }
+    async deleteProduct(id, index) {
+      try {
+        let response = await this.$axios.$delete(
+          `http://localhost:5000/api/products/${id}`
+        );
+        if (response.status) {
+          this.products.splice(index, 1);
+        }
+      } catch (error) {
+        alert(error);
+        res.status(500).json({
+          success: false,
+          message: err.message,
+        });
+      }
+    },
   },
 };
 </script>

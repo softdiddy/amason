@@ -16,7 +16,7 @@
               <div class="a-spacing-top-medium"></div>
               <label>Type</label>
               <input
-                v-model="title"
+                v-model="type"
                 type="text"
                 class="form-control"
                 placeholder="Enter Title"
@@ -28,19 +28,41 @@
               <div class="a-spacing-top-medium"></div>
               <span class="a-button-register">
                 <span class="a-button-inner">
-                  <span class="a-button-text" @click="addProduct"
+                  <span class="a-button-text" @click="addCategory"
                     >Add Category</span
                   >
                 </span>
               </span>
 
-              <NuxtLink
-                to="/"
-                class="a-button-buy-again"
-                style="margin: 10px; padding: 5px"
-                >Back to products</NuxtLink
-              >
+             
             </form>
+          </div>
+
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+            <div>
+              <b-table
+                striped
+                hover
+                :items="categories"
+                :fields="fields"
+              >
+              <template v-slot:cell(edit)="data"> 
+                <router-link tag="button" class="a-button-edit" :to="
+                  {
+                    name: 'editCategory',
+                    params: { categoryId: data.item._id}
+                  }
+                ">
+               Edit
+                </router-link>
+              </template>
+
+               <template v-slot:cell(delete)="data"> 
+                 <button tag="button" class="a-button-delete" @click="deleteCategory(data.item)">Delete</button>
+              </template>
+
+              </b-table>
+            </div>
           </div>
           
         </div>
@@ -48,3 +70,65 @@
     </div>
   </main>
 </template>
+
+
+<script>
+export default {
+    async asyncData({ $axios }) {
+    try {
+      let categories = $axios.$get("http://localhost:5000/api/catigory");
+     
+      const [catResponse] = await Promise.all([
+        categories,
+      ]);
+
+       
+      return {
+        categories: catResponse.categories,
+      };
+      
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  data() {
+    return {
+      type: "",
+     
+      fields: [
+        {
+          key: "type",
+          sortable: true,
+        },
+      
+        {
+          key: "Edit",
+        },
+        {
+          key: "Delete",
+        },
+
+      ], // table rows
+      categories: [],
+    };
+  },
+
+  methods: {
+    async addCategory() {
+      let data = {
+        type: this.type,
+      };
+
+      let result = await this.$axios.$post(
+        "http://localhost:5000/api/catigory",
+        data
+      );
+      if (result.status) {
+        this.categories.push(data);  
+      }
+   
+    },
+
+  },
+};
+</script>
